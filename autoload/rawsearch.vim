@@ -25,18 +25,18 @@ endfunction
 
 
 function! s:enable_rawsearch()
-  for l:k in s:SPECIAL_CHARS
-    let s:orig_cmaps[l:k] = maparg(l:k, 'c', 0, 1)
-    exec 'cnoremap <expr> ' l:k " getcmdtype() =~# '[/?]' ? '\\" . l:k . "' : '" . l:k . "'"
+  for l:key in s:SPECIAL_CHARS
+    let s:orig_cmaps[l:key] = maparg(l:key, 'c', 0, 1)
+    exec 'cnoremap <expr> ' l:key " getcmdtype() =~# '[/?]' ? '\\" . l:key . "' : '" . l:key . "'"
   endfor
 endfunction
 
 
 function! s:disable_rawsearch()
-  for l:k in keys(s:orig_cmaps)
-    let l:mapdict = s:orig_cmaps[l:k]
+  for l:key in keys(s:orig_cmaps)
+    let l:mapdict = s:orig_cmaps[l:key]
     if empty(l:mapdict)
-      exec 'cunmap' l:k
+      exec 'cunmap' l:key
     else
       let l:mapcmd = (l:mapdict['noremap'] ? 'cnoremap ' : 'cmap ')
             \ . (l:mapdict['buffer'] ? '<buffer> ' : '')
